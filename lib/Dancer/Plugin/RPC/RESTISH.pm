@@ -2,6 +2,7 @@ package Dancer::Plugin::RPC::RESTISH;
 use v5.10;
 use Dancer ':syntax';
 use Dancer::Plugin;
+use Time::HiRes 'time';
 
 no if $] >= 5.018, warnings => 'experimental::smartmatch';
 
@@ -191,6 +192,7 @@ register PLUGIN_NAME ,=> sub {
         };
         debug("[handling_restish_request('$request_path' via '$found_match')] ", $method_args);
 
+        my $start_request = time();
         my Dancer::RPCPlugin::CallbackResult $continue = eval {
             (my $match_re = $found_match) =~ s{:\w+}{[^/]+}g;
             local $Dancer::RPCPlugin::ROUTE_INFO = {
@@ -270,6 +272,10 @@ register PLUGIN_NAME ,=> sub {
             $jsonise_options->{utf8} = 1;
         }
 
+        info( sprintf(
+            "[RPC::RESTISH] request for %s took %.4fs",
+            $request_path, time() - $start_request
+        ));
         # non-refs will be send as-is
         return ref($response)
             ? to_json($response, $jsonise_options)
