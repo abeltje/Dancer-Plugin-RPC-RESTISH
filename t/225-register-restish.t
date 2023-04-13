@@ -1,10 +1,7 @@
-#! perl -w
-use strict;
-use lib 't/lib';
+#! perl -I. -w
+use t::Test::abeltje;
 
-use Test::More;
-
-use Dancer qw/:syntax !pass/;
+use Dancer qw/:syntax !pass !warning/;
 
 use Dancer::Plugin::RPC::RESTISH;
 use Dancer::RPCPlugin::CallbackResult;
@@ -458,4 +455,4 @@ use Dancer::Test;
     ) or diag(explain($response));
 }
 
-done_testing();
+abeltje_done_testing();

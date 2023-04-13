@@ -1,8 +1,5 @@
-#! perl -w
-use strict;
-use lib 't/lib';
-
-use Test::More;
+#! perl -I. -w
+use t::Test::abeltje;
 
 BEGIN { $ENV{DANCER_APPDIR} = '.'; }
 use TestProjectCORS;
@@ -247,4 +244,4 @@ route_exists([ GET => '/db/persons' ],      "GET /db/persons");
     ) or diag(explain($no_access));
 }
 
-done_testing();
+abeltje_done_testing();

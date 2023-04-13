@@ -1,8 +1,5 @@
-#! perl -w
-use strict;
-use lib 't/lib';
-
-use Test::More;
+#! perl -I. -w
+use t::Test::abeltje;
 
 use TestProject;
 use Dancer::Test;
@@ -160,4 +157,4 @@ route_exists([ GET => '/db/persons' ],      "GET /db/persons");
     is($response->{status}, 404, "status 404: DELETE /db/persons") or diag(explain($response));
 }
 
-done_testing();
+abeltje_done_testing();
